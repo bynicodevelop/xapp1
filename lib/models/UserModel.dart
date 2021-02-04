@@ -3,6 +3,8 @@ class UserModel {
   final String email;
   final String displayName;
   final String slug;
+  final String status;
+  final String photoURL;
   List<dynamic> likes = List<dynamic>();
 
   UserModel({
@@ -10,6 +12,8 @@ class UserModel {
     this.email,
     this.displayName,
     this.slug,
+    this.status,
+    this.photoURL,
     this.likes,
   });
 
@@ -20,6 +24,8 @@ class UserModel {
         'email': email,
         'displayName': displayName,
         'slug': slug,
+        'status': status,
+        'photoURL': photoURL,
         'likes': likes
       };
 }

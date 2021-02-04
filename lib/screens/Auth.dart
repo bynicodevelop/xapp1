@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_form/flutter_auth_form.dart';
 import 'package:provider/provider.dart';
+import 'package:xapp/main.dart';
 import 'package:xapp/providers/AuthProvider.dart';
 
 class Auth extends StatefulWidget {
@@ -59,7 +60,13 @@ class _AuthState extends State<Auth> {
               try {
                 await _authProvider.login(userModel.email, userModel.password);
 
-                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => App(),
+                  ),
+                  (Route<dynamic> route) => false,
+                );
               } catch (e) {
                 try {
                   snackbar(listMessages[e.message]);

@@ -2,14 +2,17 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:xapp/models/UserModel.dart';
 import 'package:xapp/providers/AuthProvider.dart';
 import 'package:xapp/providers/FeedProvider.dart';
 import 'package:xapp/providers/PostProvider.dart';
 import 'package:xapp/providers/ProfileProvider.dart';
 import 'package:xapp/providers/StorageProvider.dart';
 import 'package:xapp/providers/UserProvider.dart';
+import 'package:xapp/screens/Auth.dart';
 import 'package:xapp/screens/CameraTab.dart';
 import 'package:xapp/screens/FeedTab.dart';
+import 'package:xapp/screens/Profile.dart';
 import 'package:xapp/widgets/Error.dart';
 
 void main() {
@@ -109,8 +112,9 @@ class App extends StatelessWidget {
                   return FutureBuilder(
                       future: Provider.of<UserProvider>(context)
                           .init(snapshot.data),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState != ConnectionState.done) {
+                      builder: (context, userSnapshot) {
+                        if (userSnapshot.connectionState !=
+                            ConnectionState.done) {
                           return Scaffold(
                             body: Container(
                               child: Center(
@@ -120,13 +124,24 @@ class App extends StatelessWidget {
                           );
                         }
 
+                        UserModel userModel = userSnapshot.data;
+
                         return DefaultTabController(
-                          length: 2,
+                          length: 3,
                           initialIndex: 1,
                           child: TabBarView(
                             children: [
                               CameraTab(),
                               FeedTab(),
+                              userModel?.uid != null
+                                  ? Profile(
+                                      userId: userModel.uid,
+                                      displayName: userModel.displayName,
+                                      status: userModel.status,
+                                      slug: userModel.slug,
+                                      photoURL: userModel.photoURL,
+                                    )
+                                  : Auth(),
                             ],
                           ),
                         );

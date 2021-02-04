@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:xapp/main.dart';
+import 'package:xapp/providers/AuthProvider.dart';
 import 'package:xapp/providers/PostProvider.dart';
 import 'package:xapp/providers/UserProvider.dart';
 import 'package:xapp/screens/Auth.dart';
+import 'package:xapp/screens/ProfileEditor.dart';
 import 'package:xapp/screens/ProfileFeed.dart';
 import 'package:xapp/widgets/AuthCTA.dart';
 
@@ -31,6 +34,7 @@ class _ProfileState extends State<Profile> {
 
   bool _loading = false;
 
+  AuthProvider _authProvider;
   UserProvider _userProvider;
   PostProvider _postProvider;
 
@@ -51,6 +55,7 @@ class _ProfileState extends State<Profile> {
       }
     });
 
+    _authProvider = Provider.of<AuthProvider>(context, listen: false);
     _userProvider = Provider.of<UserProvider>(context, listen: false);
     _postProvider = Provider.of<PostProvider>(context, listen: false);
 
@@ -81,6 +86,64 @@ class _ProfileState extends State<Profile> {
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
+        actions: widget.userId == _userProvider.userModel.uid
+            ? [
+                PopupMenuButton(
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfileEditor(),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Text(
+                            'Profile',
+                          )
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: () {
+                        _authProvider.logout();
+
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => App(),
+                          ),
+                          (Route<dynamic> route) => false,
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.logout,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Text(
+                            'Logout',
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                  onSelected: (value) => value(),
+                ),
+              ]
+            : [],
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {

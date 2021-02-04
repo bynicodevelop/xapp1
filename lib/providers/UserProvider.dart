@@ -32,6 +32,8 @@ class UserProvider {
         email: user['email'],
         displayName: callableResult.data['displayName'],
         slug: callableResult.data['slug'],
+        photoURL: callableResult.data['photoURL'],
+        status: callableResult.data['status'],
         likes: callableResult.data['likes'],
       );
 
@@ -40,7 +42,7 @@ class UserProvider {
 
     completer.complete(_userModel);
 
-    return completer.future;
+    return await completer.future;
   }
 
   /**

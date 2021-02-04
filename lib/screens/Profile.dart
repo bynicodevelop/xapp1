@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:xapp/providers/AuthProvider.dart';
 import 'package:xapp/providers/PostProvider.dart';
-import 'package:xapp/providers/ProfileProvider.dart';
 import 'package:xapp/providers/UserProvider.dart';
 import 'package:xapp/screens/Auth.dart';
 import 'package:xapp/screens/ProfileFeed.dart';

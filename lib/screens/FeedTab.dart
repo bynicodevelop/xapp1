@@ -8,14 +8,14 @@ import 'package:xapp/widgets/AvatarBtn.dart';
 import 'package:xapp/widgets/ImageView.dart';
 import 'package:xapp/widgets/LikeButton.dart';
 
-class Feed extends StatefulWidget {
-  Feed({Key key}) : super(key: key);
+class FeedTab extends StatefulWidget {
+  FeedTab({Key key}) : super(key: key);
 
   @override
-  _FeedState createState() => _FeedState();
+  _FeedTabState createState() => _FeedTabState();
 }
 
-class _FeedState extends State<Feed> {
+class _FeedTabState extends State<FeedTab> {
   UserProvider _userProvider;
   PostProvider _postProvider;
 

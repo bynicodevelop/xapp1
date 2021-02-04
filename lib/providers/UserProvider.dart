@@ -67,7 +67,7 @@ class UserProvider {
    * String postId : Le post testé
    */
   bool postHasLiked(String postId) {
-    print('Likes: ${_userModel}');
+    print('Likes: $_userModel');
     dynamic like = _userModel.likes
         .firstWhere((like) => like['id'] == postId, orElse: () => null);
 

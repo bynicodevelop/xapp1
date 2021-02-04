@@ -6,8 +6,10 @@ import 'package:xapp/providers/AuthProvider.dart';
 import 'package:xapp/providers/FeedProvider.dart';
 import 'package:xapp/providers/PostProvider.dart';
 import 'package:xapp/providers/ProfileProvider.dart';
+import 'package:xapp/providers/StorageProvider.dart';
 import 'package:xapp/providers/UserProvider.dart';
-import 'package:xapp/screens/Feed.dart';
+import 'package:xapp/screens/CameraTab.dart';
+import 'package:xapp/screens/FeedTab.dart';
 import 'package:xapp/widgets/Error.dart';
 
 void main() {
@@ -52,14 +54,17 @@ class App extends StatelessWidget {
           );
         }
 
-        // FirebaseFunctions.instance.useFunctionsEmulator(
-        //   origin: 'http://localhost:5001',
-        // );
+        FirebaseFunctions.instance.useFunctionsEmulator(
+          origin: 'http://localhost:5001',
+        );
 
         return MultiProvider(
           providers: [
             Provider<AuthProvider>(
               create: (_) => AuthProvider(),
+            ),
+            Provider<StorageProvider>(
+              create: (_) => StorageProvider(),
             ),
             Provider<UserProvider>(
               create: (_) => UserProvider(),
@@ -97,9 +102,9 @@ class App extends StatelessWidget {
                   // Provider.of<AuthProvider>(context).logout();
 
                   // Pour le dev
-                  // if (snapshot.data != null) {
-                  //   snapshot.data['uid'] = 'hJIs8VQXb39B8GAQBd2TFvYlnyyk';
-                  // }
+                  if (snapshot.data != null) {
+                    snapshot.data['uid'] = 'hJIs8VQXb39B8GAQBd2TFvYlnyyk';
+                  }
 
                   return FutureBuilder(
                       future: Provider.of<UserProvider>(context)
@@ -116,11 +121,12 @@ class App extends StatelessWidget {
                         }
 
                         return DefaultTabController(
-                          length: 1,
-                          initialIndex: 0,
+                          length: 2,
+                          initialIndex: 1,
                           child: TabBarView(
                             children: [
-                              Feed(),
+                              CameraTab(),
+                              FeedTab(),
                             ],
                           ),
                         );

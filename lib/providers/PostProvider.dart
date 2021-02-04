@@ -16,8 +16,11 @@ class PostProvider {
   final HttpsCallable _feedCallable =
       FirebaseFunctions.instance.httpsCallable('feed');
 
-  HttpsCallable _profilePostsCallable =
+  final HttpsCallable _profilePostsCallable =
       FirebaseFunctions.instance.httpsCallable('profilePosts');
+
+  final HttpsCallable _createPostCallable =
+      FirebaseFunctions.instance.httpsCallable('createPost');
 
   String _lastFeedId;
   String _lastProfilePostRef;
@@ -128,6 +131,15 @@ class PostProvider {
         postModel.toggleHasLikes();
       }
     }
+  }
+
+  Future createPost(String imageURL, String userId) async {
+    HttpsCallableResult callableResult = await _createPostCallable.call({
+      'imageURL': imageURL,
+      'userId': userId,
+    });
+
+    print(callableResult.data);
   }
 
   void disposeProfileFeed() {
